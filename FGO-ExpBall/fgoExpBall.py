@@ -31,7 +31,7 @@ Connect device first, then type main to make ExpBall.
 Type help or ? to list commands, help <command> to get more information.
 Some commands support <command> [<subcommand> ...] {{-h, --help}} for further information.
 '''
-    prompt='FGO-py@Device> '
+    prompt='FGO-ExpBall@Device> '
     def __init__(self):
         super().__init__()
         fgoDevice.Device.enumDevices()
@@ -44,11 +44,11 @@ Some commands support <command> [<subcommand> ...] {{-h, --help}} for further in
     def do_exec(self,line):exec(line)
     def do_shell(self,line):os.system(line)
     def do_exit(self,line):
-        'Exit FGO-py'
+        'Exit FGO-ExpBall'
         return True
     def do_EOF(self,line):return self.do_exit(line)
     def do_version(self,line):
-        'Show FGO-py version'
+        'Show FGO-ExpBall version'
         print(VERSION)
     def do_connect(self,line):
         'Connect to a device'

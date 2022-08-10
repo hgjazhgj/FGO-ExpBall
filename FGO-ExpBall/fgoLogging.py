@@ -10,4 +10,4 @@ logging.root.addHandler((lambda handler:(handler.setFormatter(logging.Formatter(
 def getLogger(name):return logging.getLogger('fgo.'+name)
 def logit(logger,level=logging.DEBUG):return lambda func:wraps(func)(lambda*args,**kwargs:(lambda x:(logger.log(level,' '.join((func.__name__,str(x)[:100].split('\n',1)[0]))),x)[-1]if x is not None else x)(func(*args,**kwargs)))
 def logMeta(logger):return lambda name,bases,attrs:type(name,bases,{i:logit(logger)(j)if callable(j)and i[0]!='_'else j for i,j in attrs.items()})
-logging.getLogger('fgo').info(f'FGO-py {VERSION}')
+logging.getLogger('fgo').info(f'FGO-ExpBall {VERSION}')
