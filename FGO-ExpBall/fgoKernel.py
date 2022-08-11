@@ -27,6 +27,7 @@ class ExpBall:
                 if t:=Detect().findSpecial():
                     if Detect.cache.countSpecial()>1:
                         raise ScriptStop('Lot of Special Summoned')
+                    logger.warning('Special Summoned')
                     Button(t).click(2)
                     Button((32,180)).click(1)
                     BACK.click(1.5)
