@@ -2,7 +2,7 @@ name: Gitee Mirror on Push
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
 jobs:
   main:
     name: Gitee Mirror on Push
