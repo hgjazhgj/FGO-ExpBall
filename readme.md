@@ -35,6 +35,10 @@ FGO-ExpBall是专门用来搓丸子的程序,如果你不知道什么是[FGO-py]
 
 ## 更新日志
 
+### 2022/08/11 v0.1.0
+
+Add:.github  
+
 ### 2022/08/10 v0.0.2
 
 Fix:将所有的FGO-py替换为FGO-ExpBall  
