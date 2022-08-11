@@ -1,0 +1,19 @@
+name: Gitee Mirror on Push
+on:
+  push:
+    branches:
+      - 'master'
+jobs:
+  main:
+    name: Gitee Mirror on Push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Single repo mirror
+      uses: Yikun/hub-mirror-action@master
+      with:
+        src: github/hgjazhgj
+        dst: gitee/hgjazhgj
+        dst_key: ${{ secrets.GITEE_PRIVATE_KEY }}
+        dst_token: ${{ secrets.GITEE_TOKEN }}
+        static_list: 'FGO-ExpBall'
+        force_update: true
