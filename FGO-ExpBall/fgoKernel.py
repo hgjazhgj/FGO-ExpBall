@@ -10,7 +10,6 @@ class ExpBall:
 
     def __call__(self):
         while True:
-            # 抽友情
             SPACE.click(.5)
             if MAIN_SUMMON.appear():
                 MAIN_SUMMON.click(5)
@@ -19,6 +18,7 @@ class ExpBall:
                 SPACE.click(.8)
             while not SUMMON_FP.appear():
                 SUMMON_SWITCH.click(2.5)
+            logger.info('FP summon')
             SUMMON_SUMMON.click(.8)
             while not SUMMON_SALE.appear():
                 SUMMON_SUBMIT.click(3)
@@ -32,10 +32,11 @@ class ExpBall:
                     Button((32,180)).click(1)
                     BACK.click(1.5)
                 SUMMON_CONTINUE.click(.8)
-            # 卖从者
+            logger.info('FP summon finished')
             SUMMON_SALE.click(4)
             SELECT_FINISH.wait(1)
             SELECT_SERVANT.click(2)
+            logger.info('sell servant')
             if self.runOnce: # 每行7个 获得顺序 智能筛选
                 while not SELECT_GIRD.appear():
                     SELECT_GIRD.click(2)
@@ -45,8 +46,9 @@ class ExpBall:
                     SORT_FILTER_ON.click(.8)
                 SORT_SUBMIT.click(.8)
             self.sell()
-            # 卖礼装
+            logger.info('sell servant finished')
             SELECT_REISOU.click(2)
+            logger.info('sell reisou')
             if self.runOnce: # 每行7个 3星 智能筛选
                 while not SELECT_GIRD.appear():
                     SELECT_GIRD.click(2)
@@ -59,8 +61,9 @@ class ExpBall:
                     SORT_FILTER_ON.click(.8)
                 SORT_SUBMIT.click(.8)
             self.sell()
-            # 卖纹章
+            logger.info('sell reisou finished')
             SELECT_CODE.click(2)
+            logger.info('sell command code')
             if self.runOnce: # 每行7个 12星
                 while not SELECT_GIRD.appear():
                     SELECT_GIRD.click(2)
@@ -70,11 +73,12 @@ class ExpBall:
                 FILTER_STAR_2.click(.5)
                 FILTER_SUBMIT.click(.8)
             self.sell()
-            # 礼装强化
+            logger.info('sell command code finished')
             BACK.click(3)
             SPACE.click(.5)
             MAIN_SYNTHESIS.click(4)
             SYNTHESIS_BEGIN.click(3)
+            logger.info('reisou select')
             SYNTHESIS_LOAD.wait().click(3)
             if self.runOnce: # 每行7个 1星 等级顺序 智能筛选 降序
                 while not SELECT_GIRD.appear():
@@ -96,6 +100,7 @@ class ExpBall:
                 SYNTHESIS_SELECT.click(1)
             SELECT_LOCK.offset((60,0)).click(1.5)
             BACK.wait(.5)
+            logger.info('reisou synthesis')
             SYNTHESIS_ENTER.click(1)
             SELECT_FINISH.wait(1)
             if self.runOnce: # 每行7个 12星 稀有度顺序 智能筛选 降序
@@ -122,8 +127,12 @@ class ExpBall:
                 SUMMON_SUBMIT.click(2)
                 while not BACK.appear():
                     SPACE.click(.2)
+                if SYNTHESIS_LOAD.appear():
+                    logger.wirning('ExpBall Created')
+                    break
                 SYNTHESIS_ENTER.click(1)
                 SELECT_FINISH.wait(1)
+            logger.info('reisou synthesis finished')
             BACK.click(1).click(2).wait()
             self.runOnce=False
 

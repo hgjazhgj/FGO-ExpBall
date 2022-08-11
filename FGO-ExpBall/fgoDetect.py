@@ -11,12 +11,12 @@ logger=getLogger('Detect')
 class Button:
     device=None
     def __init__(self,center,img=None,margin=(0,0),padding=2):
+        self.center=center
         if img is not None:
             img=cv2.imread(f'fgoImage/{img}.png')
             self.img=img[center[1]-margin[1]:center[1]+margin[1],
                         center[0]-margin[0]:center[0]+margin[0]]
-        self.center=center
-        self.slice=(slice(center[1]-margin[1]-padding,center[1]+margin[1]+padding),
+            self.slice=(slice(center[1]-margin[1]-padding,center[1]+margin[1]+padding),
                     slice(center[0]-margin[0]-padding,center[0]+margin[0]+padding))
 
     def wait(self,afterDelay=0,interval=.2):
