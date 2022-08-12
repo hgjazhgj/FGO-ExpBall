@@ -60,12 +60,12 @@ Some commands support <command> [<subcommand> ...] {{-h, --help}} for further in
             '':['wsa','win']+[f'/{i}'for i in fgoDevice.helpers]+fgoDevice.Device.enumDevices()
         },text,line,begidx,endidx)
     def do_main(self,line):
-        'Loop for battle until AP empty'
+        'Make several ExpBalls endlessly'
         arg=parser_main.parse_args(line.split())
         self.work=fgoKernel.ExpBall()
         self.do_continue(f'-s {arg.sleep}')
     def do_continue(self,line):
-        'Continue last battle after abnormal break'
+        'Continue execution after abnormal break'
         arg=parser_main.parse_args(line.split())
         assert fgoDevice.device.available
         countdown(arg.sleep)
