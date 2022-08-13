@@ -1,4 +1,4 @@
-VERSION='v0.1.2'
+VERSION='v1.0.0'
 KEYMAP={} # deprecated in FGO-ExpBall
 SELL_EXP=True # cannot edit yet
 SELL_FOO=True # cannot edit yet

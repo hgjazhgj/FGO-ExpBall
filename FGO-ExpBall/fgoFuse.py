@@ -3,7 +3,7 @@ from fgoLogging import getLogger
 logger=getLogger('Fuse')
 
 class Fuse:
-    def __init__(self,fv=300,logsize=10):
+    def __init__(self,fv=80,logsize=10):
         self.value=0
         self.max=fv
         self.logsize=logsize

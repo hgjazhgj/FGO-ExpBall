@@ -1,7 +1,8 @@
 import cv2
 import numpy
 import os
-from fgoLogging import getLogger
+import time
+from fgoLogging import getLogger,logMeta,logit
 from fgoFuse import fuse
 from fgoSchedule import schedule
 
@@ -27,8 +28,8 @@ class Button:
     def appear(self,afterDelay=0):
         screen=self.device.screenshot()
         schedule.sleep(afterDelay)
-        print(numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED)))
-        if numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED))<.1:
+        # logger.debug(numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED)))
+        if numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED))<.05:
             fuse.reset()
             return True
         else:
@@ -82,18 +83,21 @@ SYNTHESIS_LOCK=Button((30,354))
 SYNTHESIS_ENTER=Button((864,242))
 
 SPECIAL=[cv2.imread(f'fgoImage/special/{i}') for i in os.listdir('fgoImage/special') if i.endswith('.png')]
-class Detect():
+class Detect(metaclass=logMeta(logger)):
     cache=None
     screenshot=None
     def __init__(self):
         self.im=self.screenshot()
         Detect.cache=self
+        self.time=time.time()
         fuse.increase()
     def _crop(self,rect):
         return self.im[rect[1]:rect[3],rect[0]:rect[2]]
+    # @logit(logger)
     def _loc(self,img,rect=(0,0,1280,720)):return cv2.minMaxLoc(cv2.matchTemplate(self._crop(rect),img,cv2.TM_SQDIFF_NORMED))
-    def _find(self,img,rect=(0,0,1280,720),threshold=.15):return(lambda loc:((rect[0]+loc[2][0]+(img.shape[1]>>1),rect[1]+loc[2][1]+(img.shape[0]>>1)),fuse.reset(self))[0]if loc[0]<threshold else None)(self._loc(img,rect))
-    def _count(self,img,rect=(0,0,1280,720),threshold=.15):return cv2.connectedComponents((cv2.matchTemplate(self._crop(rect),img,cv2.TM_SQDIFF_NORMED)<threshold).astype(numpy.uint8))[0]-1
+    def _find(self,img,rect=(0,0,1280,720),threshold=.03):return(lambda loc:((rect[0]+loc[2][0]+(img.shape[1]>>1),rect[1]+loc[2][1]+(img.shape[0]>>1)),fuse.reset(self))[0]if loc[0]<threshold else None)(self._loc(img,rect))
+    def _count(self,img,rect=(0,0,1280,720),threshold=.03):return cv2.connectedComponents((cv2.matchTemplate(self._crop(rect),img,cv2.TM_SQDIFF_NORMED)<threshold).astype(numpy.uint8))[0]-1
+    def save(self,name='Capture',rect=(0,0,1280,720),appendTime=True):return cv2.imwrite(name:=time.strftime(f'{name}{f"_%Y-%m-%d_%H.%M.%S.{round(self.time*1000)%1000:03}"if appendTime else""}.png',time.localtime(self.time)),self._crop(rect),[cv2.IMWRITE_PNG_COMPRESSION,9])and name
 
     def findSpecial(self):
         for i in SPECIAL:

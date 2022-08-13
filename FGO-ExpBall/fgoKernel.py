@@ -5,8 +5,9 @@ from fgoSchedule import schedule,ScriptStop
 logger=getLogger('Kernel')
 
 class ExpBall:
-    def __init__(self):
+    def __init__(self,appoint=0):
         self.runOnce=True
+        self.appoint=appoint
 
     def __call__(self):
         while True:
@@ -25,6 +26,7 @@ class ExpBall:
                 while not SUMMON_CONTINUE.appear():
                     SPACE.click(.4)
                 if t:=Detect().findSpecial():
+                    Detect.cache.save()
                     if Detect.cache.countSpecial()>1:
                         raise ScriptStop('Lot of Special Summoned')
                     logger.warning('Special Summoned')
@@ -128,18 +130,22 @@ class ExpBall:
                 while not BACK.appear():
                     SPACE.click(.2)
                 if SYNTHESIS_LOAD.appear():
-                    logger.wirning('ExpBall Created')
+                    logger.warning('ExpBall Created')
                     break
                 SYNTHESIS_ENTER.click(1)
                 SELECT_FINISH.wait(1)
             logger.info('reisou synthesis finished')
             BACK.click(1).click(2).wait()
+            self.appoint-=1
+            if not self.appoint:
+                break
             self.runOnce=False
 
     def selectAll(self):
         for i in range(4):
             for j in range(7):
                 Button((133+133*j,253+140*i)).click(.15)
+        schedule.sleep(1)
 
     def sell(self):
         while True:
