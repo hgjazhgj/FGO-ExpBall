@@ -153,6 +153,10 @@ class ExpBall:
                 SELECT_FINISH.wait()
                 ARCHIVE_RESULT.click(1)
             BACK.click(1).wait()
+            logger.info('GC, please wait')
+            SPACE.click(.5)
+            MAIN_MAIN.click(6)
+            BACK.wait(4)
             self.appoint-=1
             logger.info(f'Cycle left {"infinity"if self.appoint<0 else self.appoint}')
             if not self.appoint:
@@ -172,6 +176,6 @@ class ExpBall:
             if SELECT_FINISH.appear():
                 break
             SELECT_FINISH.click(1)
-            SORT_SUBMIT.click(1)
+            SORT_SUBMIT.click(2)
             SELL_RESULT.click(1)
             SELECT_FINISH.wait(1)

@@ -46,6 +46,7 @@ class Button:
 
 SPACE=Button((1231,687))
 BACK=Button((38,43),'summon_continue',(10,10))
+MAIN_MAIN=Button((137,596))
 MAIN_ARCHIVE=Button((304,596))
 MAIN_SYNTHESIS=Button((472,596))
 MAIN_SUMMON=Button((640,596),'main',(25,25))
