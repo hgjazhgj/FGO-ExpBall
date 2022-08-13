@@ -1,4 +1,4 @@
-import argparse,cmd,functools,json,os,platform,re,signal,time
+import argparse,cmd,functools,os,platform,re,signal,time
 import fgoDevice
 from fgoConst import VERSION
 import fgoLogging
