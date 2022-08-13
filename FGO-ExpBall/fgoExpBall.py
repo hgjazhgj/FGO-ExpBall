@@ -62,7 +62,7 @@ Some commands support <command> [<subcommand> ...] {{-h, --help}} for further in
     def do_main(self,line):
         'Make several ExpBalls endlessly'
         arg=parser_main.parse_args(line.split())
-        self.work=fgoKernel.ExpBall()
+        self.work=fgoKernel.ExpBall(arg.appoint)
         self.do_continue(f'-s {arg.sleep}')
     def do_continue(self,line):
         'Continue execution after abnormal break'
@@ -106,6 +106,7 @@ class ArgParser(argparse.ArgumentParser):
 
 parser_main=ArgParser(prog='main',description=Cmd.do_main.__doc__)
 parser_main.add_argument('-s','--sleep',help='Sleep before run (default: %(default)s)',type=validator(float,lambda x:x>=0,'nonnegative'),default=0)
+parser_main.add_argument('-a','--appoint',help='Cycle limit (default: %(default)s for no limit)',type=validator(int,lambda x:x>=0,'nonnegative int'),default=0)
 
 parser_connect=ArgParser(prog='connect',description=Cmd.do_connect.__doc__)
 parser_connect.add_argument('-l','--list',help='List all available devices',action='store_true')
@@ -117,4 +118,5 @@ parser_169.add_argument('action',help='Action',type=str.lower,choices=['invoke',
 def main(args):Cmd().cmdloop()
 
 if __name__=='__main__':
+    # fgoLogging.logging.getLogger('fgo').handlers[-1].setLevel('DEBUG')
     main([])
