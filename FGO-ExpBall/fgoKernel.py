@@ -176,6 +176,6 @@ class ExpBall:
             if SELECT_FINISH.appear():
                 break
             SELECT_FINISH.click(1)
-            SORT_SUBMIT.click(2)
-            SELL_RESULT.click(1)
-            SELECT_FINISH.wait(1)
+            SORT_SUBMIT.click(1)
+            SELL_RESULT.wait().click(1)
+            SELECT_FINISH.wait()
