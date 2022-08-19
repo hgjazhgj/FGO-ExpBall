@@ -26,7 +26,7 @@ class ExpBall:
                 while not SUMMON_CONTINUE.appear():
                     SPACE.click(.4)
                 if t:=Detect().findSpecial():
-                    Detect.cache.save()
+                    Detect.cache.save('fgoLog/Special')
                     if Detect.cache.countSpecial()>1:
                         raise ScriptStop('Lot of Special Summoned')
                     logger.warning('Special Summoned')
@@ -90,14 +90,19 @@ class ExpBall:
                 while not SORT_FILTER_ON.appear():
                     SORT_FILTER_ON.click(.8)
                 SORT_SUBMIT.click(.8)
-                while SORT_INC.appear():
-                    SORT_INC.click(.8)
-            if not SELECT_LOCK.appear():
-                SYNTHESIS_LOCK.click(1)
-                SELECT_LOCK.offset((60,0)).click(1)
-                SYNTHESIS_SELECT.click(1)
-            SELECT_LOCK.offset((60,0)).click(1.5)
-            BACK.wait()
+                while not SORT_DEC.appear():
+                    SORT_DEC.click(.8)
+            for i,j in((i,j)for i in range(4)for j in range(7)):
+                if not SELECT_LOCK.offset(133*j,142*i).appear():
+                    SYNTHESIS_LOCK.click(1)
+                    SELECT_LOCK.offset(133*j,142*i).offset((60,0)).click(1)
+                    SYNTHESIS_SELECT.click(1)
+                SELECT_LOCK.offset(133*j,142*i).offset((60,0)).click(1.5)
+                BACK.wait()
+                if not SORT_DEC.appear():
+                    break
+            else:
+                raise ScriptStop('No Synthesis Material')
             logger.info('Reisou synthesis')
             SYNTHESIS_ENTER.click(1)
             SELECT_FINISH.wait()
@@ -114,8 +119,8 @@ class ExpBall:
                 while not SORT_FILTER_ON.appear():
                     SORT_FILTER_ON.click(.8)
                 SORT_SUBMIT.click(.8)
-                while SORT_INC.appear():
-                    SORT_INC.click(.8)
+                while not SORT_DEC.appear():
+                    SORT_DEC.click(.8)
             while True:
                 self.selectAll()
                 if SELECT_FINISH.appear():
@@ -165,9 +170,8 @@ class ExpBall:
         logger.warning('Done')
 
     def selectAll(self):
-        for i in range(4):
-            for j in range(7):
-                Button((133+133*j,253+140*i)).click(.15)
+        for i,j in((i,j)for i in range(4)for j in range(7)):
+            Button((133+133*j,253+142*i)).click(.15)
         schedule.sleep(1)
 
     def sell(self):
