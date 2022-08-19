@@ -11,12 +11,13 @@ logger=getLogger('Detect')
 
 class Button:
     device=None
-    def __init__(self,center,img=None,size=(0,0),padding=2):
+    def __init__(self,center,img=None,size=(0,0),threshold=.08,padding=2):
         self.center=center
         if img is not None:
             img=cv2.imread(f'fgoImage/{img}.png')
             self.img=img[center[1]-size[1]:center[1]+size[1],
                          center[0]-size[0]:center[0]+size[0]]
+            self.threshold=threshold
             self.slice=(slice(center[1]-size[1]-padding,center[1]+size[1]+padding),
                         slice(center[0]-size[0]-padding,center[0]+size[0]+padding))
 
@@ -29,7 +30,7 @@ class Button:
         screen=self.device.screenshot()
         schedule.sleep(afterDelay)
         # logger.debug(numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED)))
-        if numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED))<.08:
+        if numpy.min(cv2.matchTemplate(screen[self.slice],self.img,cv2.TM_SQDIFF_NORMED))<self.threshold:
             fuse.reset()
             return True
         else:
@@ -41,8 +42,13 @@ class Button:
         schedule.sleep(afterDelay)
         return self
 
-    def offset(self,offset):
-        return Button((self.center[0]+offset[0],self.center[1]+offset[1]))
+    def offset(self,x,y):
+        result=Button((self.center[0]+x,self.center[1]+y))
+        result.img=self.img
+        result.threshold=self.threshold
+        result.slice=(slice(self.slice[0].start+y,self.slice[0].stop+y),
+                      slice(self.slice[1].start+x,self.slice[1].stop+x))
+        return result
 
 SPACE=Button((1231,687))
 BACK=Button((38,43),'summon_continue',(10,10))
@@ -61,7 +67,7 @@ SELECT_REISOU=Button((288,128))
 SELECT_CODE=Button((475,128))
 SELECT_GIRD=Button((28,677),'sort',(21,21))
 SELECT_FINISH=Button((1153,673),'lock',(27,12))
-SELECT_LOCK=Button((74,246),'lock',(6,8))
+SELECT_LOCK=Button((74,246),'lock',(6,8),.13,4)
 FILTER_FILTER=Button((980,130))
 FILTER_STAR_5=Button((266,235))
 FILTER_STAR_4=Button((454,235))
@@ -74,7 +80,7 @@ FILTER_FOU=Button((852,375))
 FILTER_RESET=Button((227,641))
 FILTER_SUBMIT=Button((1054,638))
 SORT_SORT=Button((1128,130))
-SORT_INC=Button((1248,132),'sort',(15,12))
+SORT_DEC=Button((1248,132),'sort',(15,12))
 SORT_BYTIME=Button((742,384))
 SORT_BYLEVEL=Button((318,232))
 SORT_BYRANK=Button((430,322))
