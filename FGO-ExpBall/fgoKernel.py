@@ -95,9 +95,9 @@ class ExpBall:
             for i,j in((i,j)for i in range(4)for j in range(7)):
                 if not SELECT_LOCK.offset(133*j,142*i).appear():
                     SYNTHESIS_LOCK.click(1)
-                    SELECT_LOCK.offset(133*j,142*i).offset((60,0)).click(1)
+                    SELECT_LOCK.offset(133*j,142*i).offset(60,0).click(1)
                     SYNTHESIS_SELECT.click(1)
-                SELECT_LOCK.offset(133*j,142*i).offset((60,0)).click(1.5)
+                SELECT_LOCK.offset(133*j,142*i).offset(60,0).click(1.5)
                 BACK.wait()
                 if not SORT_DEC.appear():
                     break
