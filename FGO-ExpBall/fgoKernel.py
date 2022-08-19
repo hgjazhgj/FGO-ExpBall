@@ -146,6 +146,7 @@ class ExpBall:
                     SELECT_GIRD.click(2)
                 FILTER_FILTER.click(.8)
                 FILTER_RESET.click(.5)
+                FILTER_SCROLL.click(.5)
                 FILTER_EXP.click(.5)
                 FILTER_FOU.click(.5)
                 FILTER_SUBMIT.click(.8)
