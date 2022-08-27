@@ -84,6 +84,10 @@ Some commands support <command> [<subcommand> ...] {{-h, --help}} for further in
             if platform.system()=='Windows':signal.signal(signal.SIGBREAK,signal.SIG_DFL)
             fuse.reset()
             schedule.reset()
+    def do_screenshot(self,line):
+        'Take a screenshot'
+        assert fgoDevice.device.available
+        fgoKernel.Detect(0).save()
     def do_169(self,line):
         'Adapt none 16:9 screen'
         arg=parser_169.parse_args(line.split())
