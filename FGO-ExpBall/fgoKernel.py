@@ -19,7 +19,7 @@ class ExpBall:
             else:
                 SPACE.click(.8)
             while not SUMMON_FP.appear():
-                SUMMON_SWITCH.click(2.5)
+                SUMMON_SWITCH.click(1.5)
             SUMMON_SUMMON.click(.8)
             while not SUMMON_SALE.appear():
                 SUMMON_SUBMIT.click(3)
