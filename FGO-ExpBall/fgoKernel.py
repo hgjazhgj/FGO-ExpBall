@@ -35,7 +35,7 @@ class ExpBall:
                     BACK.click(1.5)
                 SUMMON_CONTINUE.click(.8)
             logger.info('Sell servant')
-            SUMMON_SALE.click(4)
+            SUMMON_SALE.click(3)
             SELECT_FINISH.wait()
             SELECT_SERVANT.click(2)
             if self.runOnce: # 每行7个 获得顺序 智能筛选
@@ -75,12 +75,15 @@ class ExpBall:
             BACK.click(3)
             logger.info('Reisou select')
             SPACE.click(.5)
-            MAIN_SYNTHESIS.click(4)
+            MAIN_SYNTHESIS.click(3)
+            BACK.wait()
             SYNTHESIS_SYNTHESIS.click(3)
             SYNTHESIS_LOAD.wait().click(3)
-            if self.runOnce: # 每行7个 1星 等级顺序 智能筛选 降序
+            if self.runOnce: # 每行7个 全部 1星 等级顺序 智能筛选 降序
                 while not SELECT_GIRD.appear():
                     SELECT_GIRD.click(2)
+                while FILTER_EVENT.appear():
+                    FILTER_EVENT.click(.8)
                 FILTER_FILTER.click(.8)
                 FILTER_RESET.click(.5)
                 FILTER_STAR_1.click(.5)
@@ -106,9 +109,11 @@ class ExpBall:
             logger.info('Reisou synthesis')
             SYNTHESIS_ENTER.click(1)
             SELECT_FINISH.wait()
-            if self.runOnce: # 每行7个 12星 稀有度顺序 智能筛选 降序
+            if self.runOnce: # 每行7个 全部 12星 稀有度顺序 智能筛选 降序
                 while not SELECT_GIRD.appear():
                     SELECT_GIRD.click(2)
+                while FILTER_EVENT.appear():
+                    FILTER_EVENT.click(.8)
                 FILTER_FILTER.click(.8)
                 FILTER_RESET.click(.5)
                 FILTER_STAR_1.click(.5)
@@ -138,7 +143,8 @@ class ExpBall:
             BACK.click(1).wait().click(1).wait()
             logger.info('Archive')
             SPACE.click(.5)
-            MAIN_ARCHIVE.click(4)
+            MAIN_ARCHIVE.click(3)
+            BACK.wait()
             ARCHIVE_ARCHIVE.click(3)
             SELECT_FINISH.wait()
             if self.runOnce: # 每行7个 经验值 芙芙
@@ -159,7 +165,7 @@ class ExpBall:
                 SELECT_FINISH.wait()
                 ARCHIVE_RESULT.click(1)
             BACK.click(1).wait()
-            logger.info('GC, please wait')
+            logger.info('Garbage Collection')
             SPACE.click(.5)
             MAIN_MAIN.click(6)
             BACK.wait(4)
