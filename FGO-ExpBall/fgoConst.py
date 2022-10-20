@@ -1,2 +1,2 @@
 VERSION='v1.5.3'
-KEYMAP={} # deprecated in FGO-ExpBall
+KEYMAP={' ':(1231,687)} # deprecated in FGO-ExpBall
