@@ -134,7 +134,7 @@ class ExpBall:
                 SELECT_FINISH.click(.5)
                 SUMMON_SUBMIT.click(2)
                 while not BACK.appear():
-                    SPACE.click(.2)
+                    SPACE.click(.4)
                 if SYNTHESIS_LOAD.appear():
                     logger.warning('ExpBall Created')
                     break
