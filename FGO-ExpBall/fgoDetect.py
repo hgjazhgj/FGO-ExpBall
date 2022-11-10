@@ -118,4 +118,4 @@ class Detect(metaclass=logMeta(logger)):
             if t:=self._find(j,(82,184,1202,592)):
                 return i,t
     def countSpecial(self):
-        return sum(self._count(i,(82,184,1202,592))for i in SPECIAL)
+        return sum(self._count(i,(82,184,1202,592))for _,i in SPECIAL)
