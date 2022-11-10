@@ -62,7 +62,7 @@ Some commands support <command> [<subcommand> ...] {{-h, --help}} for further in
     def do_main(self,line):
         'Make several ExpBalls endlessly'
         arg=parser_main.parse_args(line.split())
-        self.work=fgoKernel.ExpBall(arg.appoint)
+        self.work=fgoKernel.ExpBall(arg.appoint,dict(arg.count))
         self.do_continue(f'-s {arg.sleep}')
     def do_continue(self,line):
         'Continue execution after abnormal break'
@@ -107,10 +107,21 @@ def validator(type,func,desc='\b'):
     return f
 class ArgParser(argparse.ArgumentParser):
     def exit(self,status=0,message=None):raise ArgError(message)
+class ArgStruct:
+    def __init__(self,*args):
+        def infIter(iterable):
+            while True:yield from iterable
+        self.it=infIter(args)
+        self.repr=f'{type(self).__name__}{args}'
+    def __call__(self,x):
+        return next(self.it)(x)
+    def __repr__(self):
+        return self.repr
 
 parser_main=ArgParser(prog='main',description=Cmd.do_main.__doc__)
 parser_main.add_argument('-s','--sleep',help='Sleep before run (default: %(default)s)',type=validator(float,lambda x:x>=0,'nonnegative'),default=0)
 parser_main.add_argument('-a','--appoint',help='Cycle limit (default: %(default)s for no limit)',type=validator(int,lambda x:x>=0,'nonnegative int'),default=0)
+parser_main.add_argument('-c','--count',help='Stop after Special Drop count',action='append',type=ArgStruct(str,validator(int,lambda x:x>0,'positive int')),default=[],nargs=2)
 
 parser_connect=ArgParser(prog='connect',description=Cmd.do_connect.__doc__)
 parser_connect.add_argument('-l','--list',help='List all available devices',action='store_true')

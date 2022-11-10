@@ -96,7 +96,7 @@ ARCHIVE_ARCHIVE=Button((958,627))
 ARCHIVE_SUBMIT=Button((836,602))
 ARCHIVE_RESULT=Button((637,602))
 
-SPECIAL=[cv2.imread(f'fgoImage/special/{i}') for i in os.listdir('fgoImage/special') if i.endswith('.png')]
+SPECIAL=[(i[:-4],cv2.imread(f'fgoImage/special/{i}'))for i in os.listdir('fgoImage/special') if i.endswith('.png')]
 class Detect(metaclass=logMeta(logger)):
     cache=None
     screenshot=None
@@ -114,8 +114,8 @@ class Detect(metaclass=logMeta(logger)):
     def save(self,name='Capture',rect=(0,0,1280,720),appendTime=True):return cv2.imwrite(name:=time.strftime(f'{name}{f"_%Y-%m-%d_%H.%M.%S.{round(self.time*1000)%1000:03}"if appendTime else""}.png',time.localtime(self.time)),self._crop(rect),[cv2.IMWRITE_PNG_COMPRESSION,9])and name
 
     def findSpecial(self):
-        for i in SPECIAL:
-            if t:=self._find(i,(82,184,1202,592)):
-                return t
+        for i,j in SPECIAL:
+            if t:=self._find(j,(82,184,1202,592)):
+                return i,t
     def countSpecial(self):
         return sum(self._count(i,(82,184,1202,592))for i in SPECIAL)

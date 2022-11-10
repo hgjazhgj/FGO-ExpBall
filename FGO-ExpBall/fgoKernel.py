@@ -5,9 +5,10 @@ from fgoSchedule import schedule,ScriptStop
 logger=getLogger('Kernel')
 
 class ExpBall:
-    def __init__(self,appoint=0):
+    def __init__(self,appoint=0,special=None):
         self.runOnce=True
         self.appoint=appoint
+        self.special={}if special is None else special
 
     def __call__(self):
         while True:
@@ -29,8 +30,11 @@ class ExpBall:
                     Detect.cache.save('fgoLog/Special')
                     if Detect.cache.countSpecial()>1:
                         raise ScriptStop('Lot of Special Summoned')
-                    logger.warning('Special Summoned')
-                    Button(t).click(2)
+                    logger.warning(f'Special Summoned {t[0]}')
+                    if self.special.setdefault(t[0],0)==1:
+                        raise ScriptStop(f'Special Summoned {t[0]} count achieved')
+                    self.special[t[0]]-=1
+                    Button(t[1]).click(2)
                     Button((32,180)).click(1)
                     BACK.click(1.5)
                 SUMMON_CONTINUE.click(.8)
