@@ -110,12 +110,11 @@ class Detect(metaclass=logMeta(logger)):
     # @logit(logger)
     def _loc(self,img,rect=(0,0,1280,720)):return cv2.minMaxLoc(cv2.matchTemplate(self._crop(rect),img,cv2.TM_SQDIFF_NORMED))
     def _find(self,img,rect=(0,0,1280,720),threshold=.03):return(lambda loc:((rect[0]+loc[2][0]+(img.shape[1]>>1),rect[1]+loc[2][1]+(img.shape[0]>>1)),fuse.reset(self))[0]if loc[0]<threshold else None)(self._loc(img,rect))
-    def _count(self,img,rect=(0,0,1280,720),threshold=.03):return cv2.connectedComponents((cv2.matchTemplate(self._crop(rect),img,cv2.TM_SQDIFF_NORMED)<threshold).astype(numpy.uint8))[0]-1
     def save(self,name='Capture',rect=(0,0,1280,720),appendTime=True):return cv2.imwrite(name:=time.strftime(f'{name}{f"_%Y-%m-%d_%H.%M.%S.{round(self.time*1000)%1000:03}"if appendTime else""}.png',time.localtime(self.time)),self._crop(rect),[cv2.IMWRITE_PNG_COMPRESSION,9])and name
 
-    def findSpecial(self):
+    def findSpecial(self,pos):
+        rect=(84+187*(pos%6+pos//6),187+225*(pos//6),258+187*(pos%6+pos//6),372+225*(pos//6))
         for i,j in SPECIAL:
-            if t:=self._find(j,(82,184,1202,592)):
+            if t:=self._find(j,rect):
                 return i,t
-    def countSpecial(self):
-        return sum(self._count(i,(82,184,1202,592))for _,i in SPECIAL)
+

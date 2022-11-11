@@ -26,16 +26,16 @@ class ExpBall:
                 SUMMON_SUBMIT.click(3)
                 while not SUMMON_CONTINUE.appear():
                     SPACE.click(.4)
-                if t:=Detect().findSpecial():
+                for i in range(10):
+                    if not(t:=Detect().findSpecial(i)):
+                        continue
                     Detect.cache.save('fgoLog/Special')
-                    if Detect.cache.countSpecial()>1:
-                        raise ScriptStop('Lot of Special Summoned')
                     logger.warning(f'Special Summoned {t[0]}')
+                    Button(t[1]).click(2)
+                    Button((32,180)).click(1)
                     if self.special.setdefault(t[0],0)==1:
                         raise ScriptStop(f'Special Summoned {t[0]} count achieved')
                     self.special[t[0]]-=1
-                    Button(t[1]).click(2)
-                    Button((32,180)).click(1)
                     BACK.click(1.5)
                 SUMMON_CONTINUE.click(.8)
             logger.info('Sell servant')
