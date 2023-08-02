@@ -70,6 +70,10 @@ e.g. `main -s 5 -a 5 -c habetrot 2 -c 1488 4`代表在5秒后搓5轮丸子,途�
 
 ## 更新日志
 
+## 2023/08/03 v1.8.1
+
+Fix:[issue #9](https://github.com/hgjazhgj/FGO-ExpBall/issues/9)  
+
 ## 2022/11.12 v1.8.0
 
 Opt:[iussue #8](https://github.com/hgjazhgj/FGO-ExpBall/issues/8)  
