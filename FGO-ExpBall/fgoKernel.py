@@ -151,15 +151,15 @@ class ExpBall:
             BACK.wait()
             ARCHIVE_ARCHIVE.click(3)
             SELECT_FINISH.wait()
-            if self.runOnce: # 每行7个 经验值 芙芙
-                while not SELECT_GIRD.appear():
-                    SELECT_GIRD.click(2)
-                FILTER_FILTER.click(.8)
-                FILTER_RESET.click(.5)
-                FILTER_SCROLL.click(.5)
-                FILTER_EXP.click(.5)
-                FILTER_FOU.click(.5)
-                FILTER_SUBMIT.click(.8)
+            # if self.runOnce: # 每行7个 经验值 芙芙
+            #     while not SELECT_GIRD.appear():
+            #         SELECT_GIRD.click(2)
+            #     FILTER_FILTER.click(.8)
+            #     FILTER_RESET.click(.5)
+            #     FILTER_SCROLL.click(.5)
+            #     FILTER_EXP.click(.5)
+            #     FILTER_FOU.click(.5)
+            #     FILTER_SUBMIT.click(.8)
             while True:
                 self.selectAll()
                 if SELECT_FINISH.appear():
