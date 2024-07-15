@@ -1,4 +1,6 @@
 import cv2
+import dis
+import inspect
 import numpy
 import os
 import time
@@ -12,6 +14,7 @@ logger=getLogger('Detect')
 class Button:
     device=None
     def __init__(self,center,img=None,size=(0,0),threshold=.08,padding=2):
+        self.name=(lambda frame:next(i.argval for i in dis.Bytecode(frame.f_code)if i.offset>frame.f_lasti))(inspect.currentframe().f_back)
         self.center=center
         if img is not None:
             img=cv2.imread(f'fgoImage/{img}.png')
